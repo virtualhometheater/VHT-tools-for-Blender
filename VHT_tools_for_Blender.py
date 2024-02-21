@@ -7,7 +7,7 @@
 bl_info = {
     "name": "VHT tools for Blender",
     "author": "Aurel Constantinescu",
-    "version": (1, 0, 0),##version
+    "version": (1, 0, 1),##version
     "blender": (3, 5, 0),
     "location": "View3D > Sidebar > VHT tools",
     "description": ("These tools will create a new window with stereoscopic SbS 180 projection for live scene view in VR and will help artist to render stereoscopic VR images or videos files."),
@@ -27,6 +27,9 @@ import time
 from datetime import datetime
 import ctypes
 from ctypes.wintypes import MAX_PATH
+import sys
+import winreg
+
 
 
 us32dll = ctypes.windll.user32
@@ -36,6 +39,19 @@ if sh32dll.SHGetSpecialFolderPathW(None, unibuf, 0x0005, False):
     documents_path = unibuf.value
 else:
     documents_path = r'C:\Users\admin\Documents'
+
+
+steam_path = "C:\\Program Files (x86)\\Steam"
+try:
+    hkey = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, "SOFTWARE\WOW6432Node\Valve\Steam")
+except:
+    hkey = None
+    
+try:
+    steam_path = winreg.QueryValueEx(hkey, "InstallPath")
+except:
+    steam_path = "C:\\Program Files (x86)\\Steam"
+
 
 
 VHT_app = 0
@@ -340,7 +356,7 @@ def Use_Scene_Camera_function(context):
 
 
 def Check_for_vht(_appID):
-    libraryfolders = r'C:\Program Files (x86)\Steam\steamapps\libraryfolders.vdf'
+    libraryfolders = steam_path[0] +  "\\steamapps\\libraryfolders.vdf"
     file = open(libraryfolders, "r")
     if(file):
         for sLine in file:	 
@@ -364,7 +380,7 @@ def Start_VHT_app_function(context):
     global VHT_app 
     monitors = us32dll.GetSystemMetrics(80)
     if(monitors > 1): 
-        steam_path = r'C:\Program Files (x86)\Steam\steam.exe'
+        steam_exe = steam_path[0] + "\\steam.exe"
       
         if(VHT_app):
             Signal_to_VHT("END_VHT")  
@@ -372,10 +388,10 @@ def Start_VHT_app_function(context):
         else:
             Signal_to_VHT("")  
             if(Check_for_vht("989060") == 1):
-                VHT_app = subprocess.Popen([steam_path, '-applaunch', '989060', '-mode', 'blender_' + Signal_string()])
+                VHT_app = subprocess.Popen([steam_exe, '-applaunch', '989060', '-mode', 'blender_' + Signal_string()])
             else:
                 if(Check_for_vht("1107280") == 1):
-                    VHT_app = subprocess.Popen([steam_path, '-applaunch', '1107280', '-mode', 'blender_' + Signal_string()])
+                    VHT_app = subprocess.Popen([steam_exe, '-applaunch', '1107280', '-mode', 'blender_' + Signal_string()])
            
             if(VHT_app == 0):
                 print("\a")
@@ -1150,7 +1166,7 @@ class Render_set_video_operator(Operator):
 
 class VHT_PT_Panel(Panel):
     bl_idname = "VHT_PT_Panel"
-    bl_label = "VHT tools v1.0.0"##version
+    bl_label = "VHT tools v1.0.1"##version
     bl_space_type = "VIEW_3D"   
     bl_region_type = "UI"
     bl_category = "VHT tools"
