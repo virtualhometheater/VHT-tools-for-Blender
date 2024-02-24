@@ -4,6 +4,7 @@
 
 “VHT tools for Blender” is a Python script add-on for Blender 3D modeling software specially designed as a concept (lets call it “Spatial Modeling”) to help CG artists to create 3D stereoscopic 180 or 360 degree panoramic computer generated art images or videos for VR users.
 
+This addon work with Blender 3.x
 
 For more informations read the "VHT tools for Blender - User Guide.pdf".
 
