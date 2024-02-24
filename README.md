@@ -8,11 +8,6 @@
 For more informations read the "VHT tools for Blender - User Guide.pdf".
 
 
-## Release History
-
-v1.0.0 – Feb 17, 2024: First release
-
-
 
 ## COPYRIGHT/LICENSE
 
