@@ -30,7 +30,7 @@ https://www.youtube.com/watch?v=3X5eLEegza8&list=PLDB53JHFXRiV2LQ0aqSr-pIEF6OljL
 
 ## Demo render samples
 
-https://virtualhometheater.com/vht-tools-for-blender
+https://virtualhometheater.com
 
 
 
